@@ -1,4 +1,4 @@
-# Xeon
+# Xeno
 
 ### Dependencies
 
@@ -21,7 +21,7 @@ Contributes and helpers.
 
 ## License
 
-This project is licensed under the [MIT](https://github.com/Twis7ed/Xeon-CSGO/blob/main/LICENSE.txt) License - see the LICENSE.txt file for details.
+This project is licensed under the [MIT](https://github.com/Twis7ed/Xeno-CSGO/blob/main/LICENSE.txt) License - see the LICENSE.txt file for details.
 
 ## Acknowledgments
 
