@@ -13,7 +13,7 @@
 class IVEngineClient
 {
 public:
-	constexpr void GetScreenSize(int32_t& width, int32_t height) noexcept
+	constexpr void GetScreenSize(int32_t& width, int32_t& height) noexcept
 	{
 		Memory::Call<void>(this, 5, std::ref(width), std::ref(height));
 	}

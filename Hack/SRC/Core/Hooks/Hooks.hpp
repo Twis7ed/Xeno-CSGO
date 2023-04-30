@@ -8,7 +8,7 @@
 #include "../Interfaces.hpp"
 #endif
 
-#include "../../Xeon/Gui/Gui.hpp"
+#include "../../Xeno/Gui/Gui.hpp"
 
 namespace Hooks
 {
@@ -26,6 +26,10 @@ namespace Hooks
 	using ResetFn = HRESULT(__thiscall*)(void*, IDirect3DDevice9*, D3DPRESENT_PARAMETERS*) noexcept;
 	inline ResetFn ResetOriginal{};
 	HRESULT __stdcall Reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* params) noexcept;
+
+	using CreateMoveFn = void(__thiscall*)(int, float, bool) noexcept;
+	inline CreateMoveFn CreateMoveOriginal{};
+	void __fastcall CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept;
 }
 
 #endif // HOOKS_HPP

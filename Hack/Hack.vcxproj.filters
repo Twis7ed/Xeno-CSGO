@@ -87,7 +87,7 @@
     <ClInclude Include="SRC\Util\SDK\IVPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Util\SDK\LocalPlayer.hpp">
+    <ClInclude Include="SRC\Core\Globals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\Core\Interfaces.hpp">
@@ -126,37 +126,49 @@
     <ClInclude Include="SRC\Core\Hooks\MinHook\trampoline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\Gui.hpp">
+    <ClInclude Include="SRC\Xeno\Gui\Gui.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imconfig.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imgui.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imgui_impl_dx9.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imgui_impl_dx9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imgui_impl_win32.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imgui_impl_win32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imgui_internal.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imstb_rectpack.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imstb_rectpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imstb_textedit.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imstb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\Xeon\Gui\ImGui\imstb_truetype.h">
+    <ClInclude Include="SRC\Xeno\Gui\ImGui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\Util\SDK\IInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\Util\SDK\IInputSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\Xeno\Config\Config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\Xeno\Config\Structs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\Xeno\Features\Misc\Misc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\Util\CRC32\CRC32.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,28 +200,37 @@
     <ClCompile Include="SRC\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\Gui.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\Gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_demo.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_draw.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_impl_dx9.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_impl_dx9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_impl_win32.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_impl_win32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_tables.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\Xeon\Gui\ImGui\imgui_widgets.cpp">
+    <ClCompile Include="SRC\Xeno\Gui\ImGui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\Xeno\Config\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\Xeno\Features\Misc\Misc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\Util\CRC32\CRC32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

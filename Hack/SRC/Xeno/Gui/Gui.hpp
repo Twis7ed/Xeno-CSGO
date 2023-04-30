@@ -16,13 +16,16 @@ namespace Gui
 	void Destroy() noexcept;
 
 	bool InitWndClass(const char* name) noexcept;
+
 	void DestroyWndClass() noexcept;
 
 	bool InitWnd(const char* name) noexcept;
+
 	void DestroyWnd() noexcept;
 
-	bool InitDirectX() noexcept;
-	void DestroyDirectX() noexcept;
+	bool InitDX9() noexcept;
+
+	void DestroyDX9() noexcept;
 
 	void InitGui(LPDIRECT3DDEVICE9 device) noexcept;
 

@@ -45,6 +45,7 @@ namespace Interfaces
 	#endif
 
 	inline IBaseClientDLL* client{};
+	inline IInput* input{};
 	inline IClientEntityList* entityList{};
 	inline IClientModeShared* clientMode{};
 	inline IEngineTrace* engineTrace{};

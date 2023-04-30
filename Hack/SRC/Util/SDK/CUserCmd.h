@@ -6,6 +6,8 @@
 
 #include "CVector.h"
 
+#include "../CRC32/CRC32.hpp"
+
 class CUserCmd
 {
 public:
@@ -38,6 +40,30 @@ public:
         IN_SECOND_GRENADE = (1 << 24),
         IN_MIDDLE_ATTACK = (1 << 25)
     };
+
+    [[nodiscard]] uint32_t GetChecksum() const noexcept
+    {
+        uint32_t hash{ 0ul };
+
+        CRC32::Init(&hash);
+        CRC32::ProcessBuffer(&hash, &commandNumber, sizeof(commandNumber));
+        CRC32::ProcessBuffer(&hash, &tickCount, sizeof(tickCount));
+        CRC32::ProcessBuffer(&hash, &viewAngles, sizeof(viewAngles));
+        CRC32::ProcessBuffer(&hash, &aimDirection, sizeof(aimDirection));
+        CRC32::ProcessBuffer(&hash, &forwardMove, sizeof(forwardMove));
+        CRC32::ProcessBuffer(&hash, &sideMove, sizeof(sideMove));
+        CRC32::ProcessBuffer(&hash, &upMove, sizeof(upMove));
+        CRC32::ProcessBuffer(&hash, &button, sizeof(button));
+        CRC32::ProcessBuffer(&hash, &impulse, sizeof(impulse));
+        CRC32::ProcessBuffer(&hash, &weaponSelect, sizeof(weaponSelect));
+        CRC32::ProcessBuffer(&hash, &weaponSubType, sizeof(weaponSubType));
+        CRC32::ProcessBuffer(&hash, &randomSeed, sizeof(randomSeed));
+        CRC32::ProcessBuffer(&hash, &mouseDeltaX, sizeof(mouseDeltaX));
+        CRC32::ProcessBuffer(&hash, &mouseDeltaY, sizeof(mouseDeltaY));
+        CRC32::Final(&hash);
+
+        return hash;
+    }
 
     void* vmt;
     int32_t commandNumber;

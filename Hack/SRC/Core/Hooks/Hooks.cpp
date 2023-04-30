@@ -5,7 +5,8 @@
 
 #include "MinHook/minhook.h"
 
-#include "../../Util/Sdk/LocalPlayer.hpp"
+#include "../Globals.hpp"
+#include "../../Xeno/Features/Misc/Misc.hpp"
 
 void Hooks::Init() noexcept
 {
@@ -15,9 +16,11 @@ void Hooks::Init() noexcept
 
 	MH_CreateHook(Memory::Get(Gui::device, 16), &Reset, reinterpret_cast<void**>(&ResetOriginal));
 
+	MH_CreateHook(Memory::Get(Interfaces::client, 22), &CreateMoveProxy, reinterpret_cast<void**>(&CreateMoveOriginal));
+
 	MH_EnableHook(nullptr);
 
-	Gui::DestroyDirectX();
+	Gui::DestroyDX9();
 }
 
 void Hooks::Destroy() noexcept
@@ -78,4 +81,58 @@ HRESULT __stdcall Hooks::Reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* 
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 	ImGui_ImplDX9_CreateDeviceObjects();
 	return ResetOriginal(device, device, params);
+}
+
+bool __stdcall CreateMoveCallback(float sampleTime, CUserCmd* cmd, const bool& sendPacket) noexcept
+{
+	Globals::localPlayer = Interfaces::entityList->GetEntityFromIndex(Interfaces::engine->GetLocalPlayerIndex());
+
+	Features::Bunnyhop(cmd);
+
+	cmd->forwardMove = std::clamp(cmd->forwardMove, -450.f, 450.f);
+	cmd->sideMove = std::clamp(cmd->sideMove, -450.f, 450.f);
+	cmd->upMove = std::clamp(cmd->upMove, -320.f, 320.f);
+
+	cmd->viewAngles.Normalize();
+	cmd->viewAngles.x = std::clamp(cmd->viewAngles.x, -89.f, 89.f);
+	cmd->viewAngles.y = std::clamp(cmd->viewAngles.y, -180.f, 180.f);
+	cmd->viewAngles.x = 0.f;
+
+	return false;
+}
+
+void __stdcall CreateMove(const int sequenceNumber, const float sampleTime, const bool isActive, const bool& sendPacket) noexcept
+{
+	Hooks::CreateMoveOriginal(sequenceNumber, sampleTime, isActive);
+
+	CUserCmd* cmd{ Interfaces::input->GetUserCmd(0, sequenceNumber) };
+	if (!cmd || cmd->commandNumber)
+		return;
+
+	CVerifiedUserCmd* verifiedCmd{ Interfaces::input->GetVerifiedUserCmd(sequenceNumber) };
+	if (!verifiedCmd)
+		return;
+
+	CreateMoveCallback(sampleTime, cmd, sendPacket);
+
+	verifiedCmd->cmd = *cmd;
+	verifiedCmd->hash = cmd->GetChecksum();
+}
+
+void __fastcall Hooks::CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept
+{
+	__asm
+	{
+		push ebp
+		mov ebp, esp
+		push ebx
+		push esp
+		push dword ptr[isActive]
+		push dword ptr[sampleTime]
+		push dword ptr[sequenceNumber]
+		call CreateMove
+		pop ebx
+		pop ebp
+		retn 0Ch
+	}
 }

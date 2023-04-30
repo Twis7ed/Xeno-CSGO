@@ -1,7 +1,7 @@
 #define DONT_INCLUDE_SDK
 #include "../../Core/Hooks/Hooks.hpp"
 
-#include "ImGui/imgui_internal.h"
+#include "../Config/Config.hpp"
 
 void Gui::Init() noexcept
 {
@@ -9,7 +9,7 @@ void Gui::Init() noexcept
 
 	InitWnd("Window");
 
-	InitDirectX();
+	InitDX9();
 
 	DestroyWnd();
 
@@ -21,7 +21,7 @@ void Gui::Destroy() noexcept
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-	DestroyDirectX();
+	DestroyDX9();
 }
 
 bool Gui::InitWndClass(const char* name) noexcept
@@ -65,7 +65,7 @@ void Gui::DestroyWnd() noexcept
 		DestroyWindow(wnd);
 }
 
-bool Gui::InitDirectX() noexcept
+bool Gui::InitDX9() noexcept
 {
 	const HMODULE handle{ GetModuleHandle("d3d9.dll") };
 	if (!handle)
@@ -102,7 +102,7 @@ bool Gui::InitDirectX() noexcept
 	return true;
 }
 
-void Gui::DestroyDirectX() noexcept
+void Gui::DestroyDX9() noexcept
 {
 	if (device)
 	{
@@ -134,25 +134,39 @@ void Gui::InitGui(const LPDIRECT3DDEVICE9 device) noexcept
 	isSetup = true;
 }
 
-float myColor;
-
 void Gui::Render() noexcept
 {
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("Xeon", &isOpen, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-	if (ImGui::BeginMenuBar())
+	ImGui::Begin("Xeno", &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+	ImGui::SetWindowSize(ImVec2(560.f, 420.f));
+
+	if (ImGui::BeginTabBar("Tabs"))
 	{
-		if (ImGui::BeginMenu("File"))
+		if (ImGui::BeginTabItem("Aimbot"))
 		{
-			if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-			if (ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
-			ImGui::EndMenu();
+			ImGui::EndTabItem();
 		}
 
-		ImGui::EndMenuBar();
+		if (ImGui::BeginTabItem("Visuals"))
+		{
+			ImGui::EndTabItem();
+		}
+
+		if (ImGui::BeginTabItem("Misc"))
+		{
+			ImGui::Checkbox("Bhop", &misc.mvmnt.bunnyhop);
+			ImGui::EndTabItem();
+		}
+
+		if (ImGui::BeginTabItem("Config"))
+		{
+			ImGui::EndTabItem();
+		}
+
+		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
