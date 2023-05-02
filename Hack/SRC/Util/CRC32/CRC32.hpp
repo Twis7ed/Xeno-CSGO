@@ -4,6 +4,7 @@
 #pragma once
 #endif
 
+#include <array>
 #include <cstdint>
 
 namespace CRC32
@@ -25,7 +26,7 @@ namespace CRC32
 
 	uint32_t GetTableEntry(uint32_t index) noexcept;
 
-    static constexpr uint32_t pulCRCTable[256]
+    static constexpr std::array<uint32_t, 265> pulCRCTable
     {
         0x00000000, 0x77073096, 0xee0e612c, 0x990951ba,
 		0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,

@@ -29,7 +29,7 @@ namespace Hooks
 
 	using CreateMoveFn = void(__thiscall*)(int, float, bool) noexcept;
 	inline CreateMoveFn CreateMoveOriginal{};
-	void __fastcall CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept;
+	void __stdcall CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept;
 }
 
 #endif // HOOKS_HPP

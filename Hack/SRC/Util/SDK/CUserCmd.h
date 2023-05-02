@@ -53,7 +53,7 @@ public:
         CRC32::ProcessBuffer(&hash, &forwardMove, sizeof(forwardMove));
         CRC32::ProcessBuffer(&hash, &sideMove, sizeof(sideMove));
         CRC32::ProcessBuffer(&hash, &upMove, sizeof(upMove));
-        CRC32::ProcessBuffer(&hash, &button, sizeof(button));
+        CRC32::ProcessBuffer(&hash, &buttons, sizeof(buttons));
         CRC32::ProcessBuffer(&hash, &impulse, sizeof(impulse));
         CRC32::ProcessBuffer(&hash, &weaponSelect, sizeof(weaponSelect));
         CRC32::ProcessBuffer(&hash, &weaponSubType, sizeof(weaponSubType));
@@ -73,7 +73,7 @@ public:
     float forwardMove;
     float sideMove;
     float upMove;
-    int32_t button;
+    int32_t buttons;
     char impulse;
     int32_t weaponSelect;
     int32_t weaponSubType;
@@ -89,7 +89,7 @@ class CVerifiedUserCmd
 {
 public:
     CUserCmd cmd;
-    uint32_t hash;
+    uint32_t crc;
 };
 
 #endif // CUSERCMD_H

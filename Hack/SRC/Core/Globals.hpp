@@ -10,6 +10,9 @@
 namespace Globals
 {
 	inline CEntity* localPlayer{};
+	inline CVector angles{};
+	inline CVector realAngles{};
+	inline bool sendPacket{ true };
 }
 
 #endif // GLOBALS_HPP

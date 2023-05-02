@@ -11,6 +11,16 @@
 class IInput
 {
 public:
+	constexpr CUserCmd* GetUserCmd(const int slot, const int sequenceNumber) noexcept
+	{
+		return Memory::Call<CUserCmd*>(this, 8, slot, sequenceNumber);
+	}
+
+	[[nodiscard]] CVerifiedUserCmd* GetVerifiedUserCmd(const int sequenceNumber) const noexcept
+	{
+		return &pVerifiedCommands[sequenceNumber % 150];
+	}
+
 	std::byte pad0[0xC];
 	bool trackIrAvailable;
 	bool mouseInitialized;
@@ -22,16 +32,6 @@ public:
 	std::byte pad3[0x38];
 	CUserCmd* pCommands;
 	CVerifiedUserCmd* pVerifiedCommands;
-
-	constexpr CUserCmd* GetUserCmd(const int index, const int sequenceNumber) noexcept
-	{
-		return Memory::Call<CUserCmd*>(this, 8, index, sequenceNumber);
-	}
-
-	[[nodiscard]] CVerifiedUserCmd* GetVerifiedUserCmd(const int sequenceNumber) const noexcept
-	{
-		return &pVerifiedCommands[sequenceNumber % 150];
-	}
 };
 
 #endif // IINPUT_H

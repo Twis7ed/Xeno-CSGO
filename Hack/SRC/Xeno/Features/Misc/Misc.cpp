@@ -12,5 +12,5 @@ void Features::Bunnyhop(CUserCmd* cmd) noexcept
 		return;
 
 	if (!(Globals::localPlayer->GetFlags() & CEntity::FL_ONGROUND))
-		cmd->button &= ~CUserCmd::IN_JUMP;
+		cmd->buttons &= ~CUserCmd::IN_JUMP;
 }

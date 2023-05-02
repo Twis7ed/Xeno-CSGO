@@ -83,11 +83,20 @@ HRESULT __stdcall Hooks::Reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* 
 	return ResetOriginal(device, device, params);
 }
 
-bool __stdcall CreateMoveCallback(float sampleTime, CUserCmd* cmd, const bool& sendPacket) noexcept
+static bool __stdcall CreateMove(float sampleTime, CUserCmd* cmd, const bool& sendPacket) noexcept
 {
 	Globals::localPlayer = Interfaces::entityList->GetEntityFromIndex(Interfaces::engine->GetLocalPlayerIndex());
 
+	auto oldViewAngles{ cmd->viewAngles };
+	auto oldForwardMove{ cmd->forwardMove };
+	auto oldSideMove{ cmd->sideMove };
+
 	Features::Bunnyhop(cmd);
+
+	if (sendPacket)
+		Globals::angles = cmd->viewAngles;
+
+	Globals::sendPacket = sendPacket;
 
 	cmd->forwardMove = std::clamp(cmd->forwardMove, -450.f, 450.f);
 	cmd->sideMove = std::clamp(cmd->sideMove, -450.f, 450.f);
@@ -98,28 +107,30 @@ bool __stdcall CreateMoveCallback(float sampleTime, CUserCmd* cmd, const bool& s
 	cmd->viewAngles.y = std::clamp(cmd->viewAngles.y, -180.f, 180.f);
 	cmd->viewAngles.x = 0.f;
 
+	Globals::realAngles = cmd->viewAngles;
+
 	return false;
 }
 
-void __stdcall CreateMove(const int sequenceNumber, const float sampleTime, const bool isActive, const bool& sendPacket) noexcept
+static void __stdcall CreateMoveCallback(const int sequenceNumber, const float sampleTime, const bool isActive, const bool& sendPacket) noexcept
 {
 	Hooks::CreateMoveOriginal(sequenceNumber, sampleTime, isActive);
 
-	CUserCmd* cmd{ Interfaces::input->GetUserCmd(0, sequenceNumber) };
+	const CUserCmd* cmd{ Interfaces::input->GetUserCmd(0, sequenceNumber) };
 	if (!cmd || cmd->commandNumber)
 		return;
-
+	
 	CVerifiedUserCmd* verifiedCmd{ Interfaces::input->GetVerifiedUserCmd(sequenceNumber) };
 	if (!verifiedCmd)
 		return;
-
-	CreateMoveCallback(sampleTime, cmd, sendPacket);
+	
+	// CreateMove(sampleTime, cmd, sendPacket);
 
 	verifiedCmd->cmd = *cmd;
-	verifiedCmd->hash = cmd->GetChecksum();
+	verifiedCmd->crc = cmd->GetChecksum();
 }
 
-void __fastcall Hooks::CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept
+__declspec(naked) void __stdcall Hooks::CreateMoveProxy(int sequenceNumber, float sampleTime, bool isActive) noexcept
 {
 	__asm
 	{
@@ -130,7 +141,7 @@ void __fastcall Hooks::CreateMoveProxy(int sequenceNumber, float sampleTime, boo
 		push dword ptr[isActive]
 		push dword ptr[sampleTime]
 		push dword ptr[sequenceNumber]
-		call CreateMove
+		call CreateMoveCallback
 		pop ebx
 		pop ebp
 		retn 0Ch
